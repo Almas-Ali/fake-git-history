@@ -1,7 +1,7 @@
 [project]
 name = "fake-git-history"
 dynamic = ["version"]
-dependencies = []
+dependencies = ["rong"]
 requires-python = ">=3.7"
 authors = [{name = "Md. Almas Ali", email = "almaspr3@gmail.com"}]
 maintainers = [{name = "Md. Almas Ali", email = "almaspr3@gmail.com"}]
@@ -58,7 +58,9 @@ classifiers = [
     "Natural Language :: English",
     "Environment :: Console",
 ]
-scripts = ["fake-git-history = fake_git_history.__main__:new_main"]
+
+[project.scripts]
+fake-git-history = "fake_git_history.__main__:new_main"
 
 [project.urls]
 Homepage = "https://github.com/Almas-Ali/fake-git-history"
