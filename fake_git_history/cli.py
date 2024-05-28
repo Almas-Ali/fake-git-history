@@ -1,6 +1,6 @@
 from typing import NamedTuple, List, Dict, Tuple
 import argparse
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 import random
 import string
 import os
@@ -23,6 +23,13 @@ class FakeGitHistory:
             datetime.now() - timedelta(days=90)
         )
         self._end_date: datetime = datetime.now()
+        self._start_time: str = "00:00:00"
+        self._end_time: str = "23:59:59"
+        self._time_zone: str = (
+            datetime.now(timezone.utc)
+            .astimezone()
+            .strftime("%z")
+        )
         self._commit_per_day: str = "0-3"
         self.is_work_days_only: bool = False
         self.is_weekends_only: bool = False
@@ -57,6 +64,62 @@ class FakeGitHistory:
         self._end_date = datetime.strptime(date, "%d/%m/%Y")
         self._log.primary(
             f"End date set to: {self._end_date}"
+        )
+
+    def set_start_time(self, time: str) -> None:
+        """Set the start time (hh:mm:ss)."""
+        self._start_time = time
+        self._log.primary(
+            f"Start time set to: {self._start_time}"
+        )
+
+    def set_end_time(self, time: str) -> None:
+        """Set the end time (hh:mm:ss)."""
+        self._end_time = time
+        self._log.primary(
+            f"End time set to: {self._end_time}"
+        )
+
+    def get_random_time(self) -> str:
+        """Generate a random time between start and end time."""
+        # Define the time format
+        time_format = "%H:%M:%S"
+
+        # Convert start and end times to datetime objects
+        start_time = datetime.strptime(
+            self._start_time, time_format
+        )
+        end_time = datetime.strptime(
+            self._end_time, time_format
+        )
+
+        # Calculate the time difference in seconds
+        delta = end_time - start_time
+        total_seconds = delta.total_seconds()
+
+        # Generate a random number of seconds within the time range
+        random_seconds = random.randint(
+            0, int(total_seconds)
+        )
+
+        # Get the random time by adding the random seconds to the start time
+        random_time = start_time + timedelta(
+            seconds=random_seconds
+        )
+
+        # Return the random time as a string
+        return random_time.strftime(time_format)
+
+    def set_time_zone(self, time_zone: str) -> None:
+        """Set the time zone in the format +0600"""
+        if re.match(r"[\+\-]\d{4}", time_zone):
+            self._time_zone = time_zone
+        else:
+            self._log.errormsg(
+                "Invalid time zone. Please provide a time zone in the format +0600."
+            )
+        self._log.primary(
+            f"Time zone set to: {self._time_zone}"
         )
 
     def set_commit_per_day(self, count_range: str) -> None:
@@ -133,7 +196,7 @@ class FakeGitHistory:
             file.write(filecontent)
 
         # Setting a default time
-        _time: str = datetime.now().strftime("%H:%M:%S")
+        _time: str = self.get_random_time()
 
         # dates "Sat Jun 26 20:38:25 2021 +0600"
         dates: Dict[str, str] = {
@@ -143,7 +206,10 @@ class FakeGitHistory:
             "year": self._start_date.strftime("%Y"),
         }
 
-        _commit_date: str = f"{dates.get('dateName')} {dates.get('month')} {dates.get('date')} {_time} {dates.get('year')} +0600"
+        _commit_date: str = f"{dates.get('dateName')} {dates.get('month')} {dates.get('date')} {_time} {dates.get('year')} {self._time_zone}"
+
+        # log the commit date
+        self._log.primary(f"Commit date: {_commit_date}")
 
         def add_file_commit() -> None:
             _ = subprocess.Popen(
@@ -246,23 +312,34 @@ class FakeGitHistory:
         try:
             # loop through start date to end date and create commits
             while self._start_date <= self._end_date:
-
                 # Check if the date is a weekend or workday
                 # weekend is 5 (Saturday) and 6 (Sunday)
                 # workday is 0 (Monday) to 4 (Friday)
                 # else work 7 days
-                if self.is_work_days_only and self._start_date.weekday() >= 5:
-                    self._log.waitmsg(f"Skipping weekend date: {self._start_date} ({self._start_date.strftime('%a')})")
+                if (
+                    self.is_work_days_only
+                    and self._start_date.weekday() >= 5
+                ):
+                    self._log.waitmsg(
+                        f"Skipping weekend date: {self._start_date} ({self._start_date.strftime('%a')})"
+                    )
                     # increment the date
                     self._start_date += timedelta(days=1)
                     continue
-                elif self.is_weekends_only and self._start_date.weekday() < 5:
-                    self._log.waitmsg(f"Skipping weekday date: {self._start_date} ({self._start_date.strftime('%a')})")
+                elif (
+                    self.is_weekends_only
+                    and self._start_date.weekday() < 5
+                ):
+                    self._log.waitmsg(
+                        f"Skipping weekday date: {self._start_date} ({self._start_date.strftime('%a')})"
+                    )
                     # increment the date
                     self._start_date += timedelta(days=1)
                     continue
 
-                self._log.waitmsg(f"Processing date: {self._start_date} ({self._start_date.strftime('%a')})")
+                self._log.waitmsg(
+                    f"Processing date: {self._start_date} ({self._start_date.strftime('%a')})"
+                )
 
                 _internal_commit_per_day: int = (
                     self.get_commit_per_day(
@@ -300,9 +377,7 @@ class FakeGitHistory:
             self._log.errormsg("Script failed.")
             return
 
-        print(self._remote_origin)
         if self._remote_origin != "":
-            print("inside login",self._remote_origin)
             stdout, stderr = subprocess.Popen(
                 [
                     "git",
@@ -346,27 +421,45 @@ def main() -> None:
     )
     parser.add_argument(
         "--start-date",
-        "-s",
+        "-sd",
         type=str,
         help="Set the start date (dd/mm/yyyy)",
     )
     parser.add_argument(
         "--end-date",
-        "-e",
+        "-ed",
         type=str,
         help="Set the end date (dd/mm/yyyy)",
     )
     parser.add_argument(
+        "--start-time",
+        "-st",
+        type=str,
+        help="Set the start time (hh:mm:ss)",
+    )
+    parser.add_argument(
+        "--end-time",
+        "-et",
+        type=str,
+        help="Set the end time (hh:mm:ss)",
+    )
+    parser.add_argument(
+        "--time-zone",
+        "-tz",
+        type=str,
+        help="Set the time zone in the format +0600",
+    )
+    parser.add_argument(
         "--work-days-only",
-        "-d",
+        "-wd",
         action="store_true",
-        help="Filter commits to workdays only",
+        help="Create commits to workdays only",
     )
     parser.add_argument(
         "--weekends-only",
-        "-w",
+        "-we",
         action="store_true",
-        help="Filter commits to weekends only",
+        help="Create commits to weekends only",
     )
     parser.add_argument(
         "--commit-per-day",
@@ -409,6 +502,12 @@ def main() -> None:
         fgh.set_start_date(date=args.start_date)
     if args.end_date:
         fgh.set_end_date(date=args.end_date)
+    if args.start_time:
+        fgh.set_start_time(time=args.start_time)
+    if args.end_time:
+        fgh.set_end_time(time=args.end_time)
+    if args.time_zone:
+        fgh.set_time_zone(time_zone=args.time_zone)
     if args.work_days_only:
         fgh.work_days_only()
     if args.weekends_only:
@@ -418,7 +517,9 @@ def main() -> None:
             count_range=str(args.commit_per_day)
         )
     if args.remote_origin:
-        fgh.set_remote_origin(remote_origin=args.remote_origin)
+        fgh.set_remote_origin(
+            remote_origin=args.remote_origin
+        )
     if args.auto_git_push:
         fgh.set_auto_git_push()
     if args.version:
