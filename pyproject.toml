@@ -73,7 +73,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.version]
-path = "fake_git_history/__init__.py"
+path = "fake_git_history/cli.py"
 
 [tool.ruff]
 line-length = 60
