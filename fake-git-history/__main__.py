@@ -9,6 +9,7 @@ import rong  # type: ignore
 
 from cli import main
 
+version = "1.0.0"
 
 if __name__ == "__main__":
     log = rong.Log(debug=True)
@@ -32,6 +33,10 @@ if __name__ == "__main__":
 
     print()
     # reminder to give a star to the repo
-    log.yellow("😃 If you liked the script, please consider giving a star in GitHub repo.")
-    log.okmsg("https://github.com/Almas-Ali/fake-git-history")
+    log.yellow(
+        "😃 If you liked the script, please consider giving a star in GitHub repo."
+    )
+    log.okmsg(
+        "https://github.com/Almas-Ali/fake-git-history"
+    )
     log.success("❤️  Thank you for using the script! :)")
