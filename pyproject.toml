@@ -1,0 +1,86 @@
+[project]
+name = "fake-git-history"
+dynamic = ["version"]
+dependencies = []
+requires-python = ">=3.7"
+authors = [{name = "Md. Almas Ali", email = "almaspr3@gmail.com"}]
+maintainers = [{name = "Md. Almas Ali", email = "almaspr3@gmail.com"}]
+description = "A simple utility to generate fake git history for a Github and Gitlab profile."
+readme = "README.md"
+license = {file = "LICENSE"}
+keywords = [
+    "git",
+    "github",
+    "gitlab",
+    "history",
+    "fake",
+    "profile",
+    "utility",
+    "cli",
+    "tool",
+    "command-line",
+    "command-line-tool",
+    "command-line-utility",
+    "command-line-interface",
+    "cli-tool",
+    "cli-utility",
+    "cli-interface",
+    "cli-tool",
+    "cli-utility",
+    "cli-interface",
+    "commit",
+    "commits",
+    "commit-history",
+    "commit-history-generator",
+    "commit-history-generator-tool",
+    "commit-history-generator-utility",
+    "commit-history-generator-interface",
+    "commit-history-generator-cli",
+    "commit-history-generator-command-line",
+    "commit-history-generator-command-line-tool",
+    "commit-history-generator-command-line-utility",
+    "commit-history-generator-command-line-interface",
+    "commit-history-generator-cli-tool",
+]
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Development Status :: 5 - Production/Stable",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Intended Audience :: Developers",
+    "Natural Language :: English",
+    "Environment :: Console",
+]
+
+[project.urls]
+Homepage = "https://github.com/Almas-Ali/fake-git-history"
+Documentation = "https://github.com/Almas-Ali/fake-git-history#readme"
+Repository = "https://github.com/Almas-Ali/fake-git-history"
+"Bug Tracker" = "https://github.com/Almas-Ali/fake-git-history/issues"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.version]
+path = "fake-git-history/__main__.py"
+
+[tool.ruff]
+line-length = 60
+target-version = "py311"
+respect-gitignore = false
+
+[tool.ruff.format]
+quote-style = "double"
+docstring-code-format = true
+skip-magic-trailing-comma = true
+
+[tool.codespell]
+skip = ".git,.vscode,.venv/*"
