@@ -2,7 +2,7 @@
 
 A command-line tool that generates GitHub or GitLab activity graph to make it look like you have been coding regularly.
 
-<img src="https://github.com/Almas-Ali/fake-git-history/blob/master/contribution-graph.png" alt="How it works" />
+![How it works](https://github.com/Almas-Ali/fake-git-history/blob/master/contribution-graph.gif "How it works")
 
 ## Features
 
