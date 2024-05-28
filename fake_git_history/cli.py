@@ -288,7 +288,13 @@ class FakeGitHistory:
 
         if self._remote_origin:
             _, stderr = subprocess.Popen(
-                ["git", "remote", "add", "origin", self._remote_origin],
+                [
+                    "git",
+                    "remote",
+                    "add",
+                    "origin",
+                    self._remote_origin,
+                ],
                 stdout=subprocess.PIPE,
             ).communicate()
             if stderr:
@@ -306,7 +312,9 @@ class FakeGitHistory:
             if stderr:
                 self._log.errormsg(f"Error: {str(stderr)}")
             else:
-                self._log.okmsg(f"Pushed to {self._remote_origin}")
+                self._log.okmsg(
+                    f"Pushed to {self._remote_origin}"
+                )
 
         self._log.okmsg("Script completed.")
 

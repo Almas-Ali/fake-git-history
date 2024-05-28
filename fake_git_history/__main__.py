@@ -7,11 +7,10 @@ import os
 
 import rong  # type: ignore
 
-from cli import main
+from .cli import main
 
-version = "1.0.0"
 
-if __name__ == "__main__":
+def new_main() -> None:
     log = rong.Log(debug=True)
     try:
         main()
@@ -40,3 +39,7 @@ if __name__ == "__main__":
         "https://github.com/Almas-Ali/fake-git-history"
     )
     log.success("❤️  Thank you for using the script! :)")
+
+
+if __name__ == "__main__":
+    new_main()
