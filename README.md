@@ -239,6 +239,15 @@ options:
   --version, -v         Show the version
 ```
 
+After running the script, you will see a `my-history` folder in your current directory. This folder contains the git repository with the fake commits. You can check the commits by going to the `my-history` folder and running the `git log` command.
+
+```bash
+cd my-history
+git log
+```
+
+If you have enabled the auto git push and set the remote origin, then the commits will be pushed to the remote repository. You can check the commits on your Github or Gitlab profile.
+
 ## Demo and Examples
 
 ### Example 1
