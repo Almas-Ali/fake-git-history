@@ -304,7 +304,7 @@ fake-git-history -sd "07/03/2021" -ed "07/03/2022" -st "09:00:00" -et "17:00:00"
 
 ## Caution
 
-This tool was created as a joke, so please don't take it seriously. While cheating is never encouraged, if someone is judging your professional skills based on your GitHub activity graph, they deserve to see a rich activity graph 🤓
+This tool was created as a joke, so please don't take it seriously. While cheating is never encouraged, if someone is judging your professional skills based on your GitHub activity graph, they deserve to see a rich activity graph. 🤓
 
 ## License
 
