@@ -41,65 +41,91 @@ If you rely on this tool and find it useful, please consider supporting it. Main
 
 ## Options and Usage
 
-### `--commit-per-day`
+### `--commit-per-day` and `-c`
 
 Specify the number of commits to be created for each day.
 The default value is `0-3`, which means it will randomly generate from 0 to 3 commits per day. For example, to generate commits randomly between 6 and 12 per day, you can do:
 
 ```bash
 fake-git-history --commit-per-day "6-12"
+# or
+fake-git-history -c "6-12"
 ```
 
 You can also give a strict number. For example, you need 16 contributions every single day. Then use this command. Not recommended, this will make views to easily detect your bot.
 
 ```bash
 fake-git-history --commit-per-day "16"
+# or
+fake-git-history -c "16"
 ```
 
-### `--work-days-only`
+### `--work-days-only` and `-d`
 
 Use this option if you don't want to commit on weekends. Example:
 
 ```bash
 fake-git-history --work-days-only
+# or
+fake-git-history -d
 ```
 
-### `--weekends-only`
+### `--weekends-only` and `-w`
 
 Use this option if you only want to contribute on weekends. Example:
 
 ```bash
 fake-git-history --weekends-only
+# or
+fake-git-history -w
 ```
 
-### `--start-date` and `--end-date`
+### `--start-date` and `--end-date` or `-s` and `-e`
 
-You have to give this script a starting date to start from. But end date is by default present date. If you don't change it, it will make contribution history for you till present date. Example:
+The starting data is by default set to previous 90 days from the current date and end date is by default present date. If you don't change, it will create commits for the last 90 days. You can change the start date and end date. Example:
 
 ```bash
 # Strict end date
 fake-git-history --start-date "01/03/2016" --endDate "12/02/2023"
+# or
+fake-git-history -s "01/03/2016" -e "12/02/2023"
 
 # Flexible end date
 fake-git-history --start-date "01/03/2016"
+# or
+fake-git-history -s "01/03/2016"
 ```
 
 The date formating is `DD/MM/YYYY`. You have to write this way.
 
-### `--verbose`
+### `--auto-git-push` and `-a`
+
+Use this option to automatically push the commits to the remote repository. Example:
+
+```bash
+fake-git-history --auto-git-push
+# or
+fake-git-history -a
+```
+
+### `--verbose` and `-vv`
 
 Use this option to see the verbose output. Without this option you won't be able to see much information about the process. Example:
 
 ```bash
 fake-git-history --verbose
+# or
+fake-git-history -vv
 ```
 
-### `--version`
+### `--version` and `-v`
 
 Use this option to check the version of this script.
 
 ```bash
 fake-git-history --version
+# or
+fake-git-history -v
 ```
 
 ### `--help` and `-h`
@@ -113,21 +139,23 @@ fake-git-history --help
 **Output**
 
 ```bash
-usage: fake-git-history [-h] [--start-date START_DATE] [--end-date END_DATE] [--work-days-only] [--weekends-only] [--commit-per-day COMMIT_PER_DAY] [--verbose] [--version]
+usage: fake-git-history [-h] [--start-date START_DATE] [--end-date END_DATE] [--work-days-only] [--weekends-only] [--commit-per-day COMMIT_PER_DAY] [--auto-git-push] [--verbose] [--version]
 
-Fake Git History - A python script to create fake git history.
+Fake Git History - A simple utility to generate fake git history for a Github and Gitlab profile.
 
 options:
   -h, --help            show this help message and exit
-  --start-date START_DATE
+  --start-date START_DATE, -s START_DATE
                         Set the start date (dd/mm/yyyy)
-  --end-date END_DATE   Set the end date (dd/mm/yyyy)
-  --work-days-only      Filter commits to workdays only
-  --weekends-only       Filter commits to weekends only
-  --commit-per-day COMMIT_PER_DAY
+  --end-date END_DATE, -e END_DATE
+                        Set the end date (dd/mm/yyyy)
+  --work-days-only, -d  Filter commits to workdays only
+  --weekends-only, -w   Filter commits to weekends only
+  --commit-per-day COMMIT_PER_DAY, -c COMMIT_PER_DAY
                         Set the number of commits per day
-  --verbose             Enable verbose mode
-  --version             Show the version
+  --auto-git-push, -a   Enable auto git push
+  --verbose, -vv        Enable verbose mode
+  --version, -v         Show the version
 ```
 
 ## PS
