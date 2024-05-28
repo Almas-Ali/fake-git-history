@@ -9,6 +9,8 @@ import re
 
 import rong  # type: ignore
 
+__version__ = "1.0.1"
+
 
 class Commit(NamedTuple):
     message: str
@@ -174,7 +176,11 @@ class FakeGitHistory:
 
     def version(self) -> None:
         """Show the version."""
-        print("Fake Git History version 1.0.0")
+        rong.Text(
+            text=f"Fake Git History version v{__version__}",
+            fg=rong.ForegroundColor.GREEN,
+            styles=[rong.Style.BOLD],
+        ).print()
 
     def set_auto_git_push(self) -> None:
         """Set auto git push."""
@@ -524,5 +530,6 @@ def main() -> None:
         fgh.set_auto_git_push()
     if args.version:
         fgh.version()
+        exit()
 
     fgh.run()
