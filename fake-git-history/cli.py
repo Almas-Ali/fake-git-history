@@ -19,37 +19,28 @@ class FakeGitHistory:
     def __init__(self) -> None:
         self._current_commit: int = 0
         self._commits: List[Commit] = []
-        self._start_date: datetime = datetime.now()
+        self._start_date: datetime = (
+            datetime.now() - timedelta(days=90)
+        )
         self._end_date: datetime = datetime.now()
         self._commit_per_day: str = "3"
+        self.is_work_days_only: bool = False
+        self.is_weekends_only: bool = False
         self._verbose: bool = False
+        self._auto_git_push: bool = True
 
         # rong config
         self._log: rong.Log = rong.Log(debug=False)
 
     def work_days_only(self) -> None:
-        """Filter commits to workdays only."""
-        self._commits = [
-            commit
-            for commit in self._commits
-            if datetime.strptime(
-                commit.date, "%Y-%m-%d %H:%M:%S"
-            ).weekday()
-            < 5
-        ]
-        self._log.primary("Filtered to workdays only.")
+        """Set the commits to workdays only."""
+        self.is_work_days_only = True
+        self._log.primary("Set to workdays only.")
 
     def weekends_only(self) -> None:
-        """Filter commits to weekends only."""
-        self._commits = [
-            commit
-            for commit in self._commits
-            if datetime.strptime(
-                commit.date, "%Y-%m-%d %H:%M:%S"
-            ).weekday()
-            >= 5
-        ]
-        self._log.primary("Filtered to weekends only.")
+        """Set the commits to weekends only."""
+        self.is_weekends_only = True
+        self._log.primary("Set to weekends only.")
 
     def set_start_date(self, date: str) -> None:
         """Set the start date (dd/mm/yyyy)."""
@@ -114,6 +105,11 @@ class FakeGitHistory:
         """Show the version."""
         print("Fake Git History version 1.0.0")
 
+    def set_auto_git_push(self) -> None:
+        """Set auto git push."""
+        self._auto_git_push = True
+        self._log.primary("Auto git push enabled.")
+
     def worker(
         self,
         filename: str,
@@ -124,6 +120,7 @@ class FakeGitHistory:
     ) -> None:
         """Worker function to create commits."""
 
+        # Create a file with the filename
         with open(filename, "a") as file:
             file.write(filecontent)
 
@@ -225,6 +222,19 @@ class FakeGitHistory:
                 self._log.errormsg("Invalid state.")
             return state, name_description
 
+        # Create a my-history folder if it doesn't exist
+        if not os.path.exists("my-history"):
+            os.makedirs("my-history")
+
+        # Change the directory to my-history
+        os.chdir("my-history")
+
+        # Initialize a git repository if it doesn't exist
+        if not os.path.exists(".git"):
+            _ = subprocess.Popen(
+                ["git", "init"], stdout=subprocess.PIPE
+            ).communicate()
+
         try:
             # loop through start date to end date and create commits
             while self._start_date <= self._end_date:
@@ -268,45 +278,64 @@ class FakeGitHistory:
             self._log.errormsg("Script failed.")
             return
 
+        if self._auto_git_push:
+            _ = subprocess.Popen(
+                ["git", "push", "-u", "origin", "master"],
+                stdout=subprocess.PIPE,
+            ).communicate()
+
         self._log.okmsg("Script completed.")
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Fake Git History - A python script to create fake git history."
+        description="Fake Git History - A simple utility to generate fake git history for a Github and Gitlab profile."
     )
     parser.add_argument(
         "--start-date",
+        "-s",
         type=str,
         help="Set the start date (dd/mm/yyyy)",
     )
     parser.add_argument(
         "--end-date",
+        "-e",
         type=str,
         help="Set the end date (dd/mm/yyyy)",
     )
     parser.add_argument(
         "--work-days-only",
+        "-d",
         action="store_true",
         help="Filter commits to workdays only",
     )
     parser.add_argument(
         "--weekends-only",
+        "-w",
         action="store_true",
         help="Filter commits to weekends only",
     )
     parser.add_argument(
         "--commit-per-day",
+        "-c",
         type=str,
         help="Set the number of commits per day",
     )
     parser.add_argument(
+        "--auto-git-push",
+        "-a",
+        action="store_true",
+        help="Enable auto git push",
+    )
+    parser.add_argument(
         "--verbose",
+        "-vv",
         action="store_true",
         help="Enable verbose mode",
     )
     parser.add_argument(
         "--version",
+        "-v",
         action="store_true",
         help="Show the version",
     )
@@ -329,6 +358,8 @@ def main() -> None:
         fgh.set_commit_per_day(
             count_range=str(args.commit_per_day)
         )
+    if args.auto_git_push:
+        fgh.set_auto_git_push()
     if args.version:
         fgh.version()
 
