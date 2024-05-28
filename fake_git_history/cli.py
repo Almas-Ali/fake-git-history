@@ -23,7 +23,7 @@ class FakeGitHistory:
             datetime.now() - timedelta(days=90)
         )
         self._end_date: datetime = datetime.now()
-        self._commit_per_day: str = "3"
+        self._commit_per_day: str = "0-3"
         self.is_work_days_only: bool = False
         self.is_weekends_only: bool = False
         self._verbose: bool = False
