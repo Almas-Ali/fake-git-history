@@ -1,13 +1,20 @@
 # Fake Git History Generator
 
-A command-line tool that generates GitHub or GitLab activity graph to make it look like you have been coding regularly.
+A simple utility to generate fake git history for a Github and Gitlab profile to make your profile look more active than it actually is.
+
+[![wakatime](https://wakatime.com/badge/user/168edf9f-71dc-49cc-bf77-592d9c9d4eed/project/60aed9e5-281b-4468-8819-5a1cef8d90d8.svg)](https://wakatime.com/badge/user/168edf9f-71dc-49cc-bf77-592d9c9d4eed/project/60aed9e5-281b-4468-8819-5a1cef8d90d8)
+[![PyPI version](https://badge.fury.io/py/fake-git-history.svg)](https://badge.fury.io/py/fake-git-history)
+[![Downloads](https://pepy.tech/badge/fake-git-history)](https://pepy.tech/project/fake-git-history)
+[![Downloads](https://pepy.tech/badge/fake-git-history/month)](https://pepy.tech/project/fake-git-history)
+[![Downloads](https://pepy.tech/badge/fake-git-history/week)](https://pepy.tech/project/fake-git-history)
 
 ![How it works](https://github.com/Almas-Ali/fake-git-history/blob/master/contribution-graph.gif "How it works")
 
 ## Table of Contents
 
-- [Installation](#installation)
+- [Introduction](#introduction)
 - [Support This Project](#support-this-project)
+- [Installation](#installation)
 - [Options and Usage](#options-and-usage)
   - [`--commit-per-day` and `-c`](#--commit-per-day-and--c)
   - [`--work-days-only` and `-wd`](#--work-days-only-and--wd)
@@ -29,6 +36,24 @@ A command-line tool that generates GitHub or GitLab activity graph to make it lo
 - [Caution](#caution)
 - [License](#license)
 
+## Introduction
+
+Fake Git History Generator is a simple utility to generate fake git history for a Github and Gitlab profile to make your profile look more active than it actually is. It generates fake commits for the last 90 days (by default config) with random commit counts per day (0-3). You can also specify the number of commits per day, start date, end date, start time, end time, time zone, work days only, weekends only, remote origin, auto git push, and verbose output.
+
+It uses the `git` command to create commits and push them to the remote repository.
+
+**Give this project a star, if you like it. (Highly Recommended) 🌟**
+
+This project is inspired by [fake-git-history](https://github.com/artiebits/fake-git-history) JS project.
+
+**Note:** Read the [Caution](#caution) section before using this tool.
+
+## Support This Project
+
+If you find this project useful and want to support my work, you can buy me a coffee. My work is open source and free. Your support will allow me to continue my work and build more projects. Thank you for your support!
+
+<a href="https://www.buymeacoffee.com/almaspr3" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" title="Support Md. Almas Ali"></a>
+
 ## Installation
 
 You need to have [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) and [Python3](https://www.python.org/downloads/) installed on your machine. Then you can install it with `pip`.
@@ -49,12 +74,6 @@ cd fake-git-history
 # Install it with pip
 pip install .
 ```
-
-## Support This Project
-
-If you rely on this tool and find it useful, please consider supporting it. Maintaining an open source project takes time and a cup of coffee would be greatly appreciated!
-
-<a href="https://www.buymeacoffee.com/almaspr3" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" title="Support Md. Almas Ali"></a>
 
 ## Options and Usage
 
