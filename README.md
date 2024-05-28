@@ -10,10 +10,13 @@ A command-line tool that generates GitHub or GitLab activity graph to make it lo
 - [Support This Project](#support-this-project)
 - [Options and Usage](#options-and-usage)
   - [`--commit-per-day` and `-c`](#--commit-per-day-and--c)
-  - [`--work-days-only` and `-d`](#--work-days-only-and--d)
-  - [`--weekends-only` and `-w`](#--weekends-only-and--w)
-  - [`--start-date` and `--end-date` or `-s` and `-e`](#--start-date-and--end-date-or--s-and--e)
-  - [`--auto-git-push` and `-a`](#--auto-git-push-and---a)
+  - [`--work-days-only` and `-wd`](#--work-days-only-and--wd)
+  - [`--weekends-only` and `-we`](#--weekends-only-and--we)
+  - [`--start-date` and `--end-date` or `-sd` and `-ed`](#--start-date-and--end-date-or--sd-and--ed)
+  - [`--start-time` and `--end-time` or `-st` and `-et`](#--start-time-and--end-time-or--st-and--et)
+  - [`--time-zone` and `-tz`](#--time-zone-and--tz)
+  - [`--remote-origin` and `-r`](#--remote-origin-and---r)
+  - [`--auto-git-push` and `-a`](#--auto-git-push-and--a)
   - [`--verbose` and `-vv`](#--verbose-and--vv)
   - [`--version` and `-v`](#--version-and--v)
   - [`--help` and `-h`](#--help-and--h)
@@ -22,6 +25,7 @@ A command-line tool that generates GitHub or GitLab activity graph to make it lo
   - [Example 2](#example-2)
   - [Example 3](#example-3)
   - [Example 4](#example-4)
+  - [Example 5](#example-5)
 - [Caution](#caution)
 - [License](#license)
 
@@ -73,7 +77,7 @@ fake-git-history --commit-per-day "16"
 fake-git-history -c "16"
 ```
 
-### `--work-days-only` and `-d`
+### `--work-days-only` and `-wd`
 
 Use this option if you don't want to commit on weekends. Example:
 
@@ -83,7 +87,7 @@ fake-git-history --work-days-only
 fake-git-history -d
 ```
 
-### `--weekends-only` and `-w`
+### `--weekends-only` and `-we`
 
 Use this option if you only want to contribute on weekends. Example:
 
@@ -93,13 +97,13 @@ fake-git-history --weekends-only
 fake-git-history -w
 ```
 
-### `--start-date` and `--end-date` or `-s` and `-e`
+### `--start-date` and `--end-date` or `-sd` and `-ed`
 
 The starting data is by default set to previous 90 days from the current date and end date is by default present date. If you don't change, it will create commits for the last 90 days. You can change the start date and end date. Example:
 
 ```bash
-# Strict end date
-fake-git-history --start-date "01/03/2016" --endDate "12/02/2023"
+# User defined start and end date
+fake-git-history --start-date "01/03/2016" --end-date "12/02/2023"
 # or
 fake-git-history -s "01/03/2016" -e "12/02/2023"
 
@@ -110,6 +114,32 @@ fake-git-history -s "01/03/2016"
 ```
 
 The date formating is `DD/MM/YYYY`. You have to write this way.
+
+### `--start-time` and `--end-time` or `-st` and `-et`
+
+The starting time is by default set to `00:00:00` and end time is by default `23:59:59`. You can change the start time and end time. Example:
+
+```bash
+# User defined start and end time
+fake-git-history --start-time "09:00:00" --end-time "17:00:00"
+# or
+fake-git-history -st "09:00:00" -et "17:00:00"
+```
+
+The time formating is `HH:MM:SS`. You have to write this way.
+
+### `--time-zone` and `-tz`
+
+The time zone is by default set to your local time zone. You can change the time zone. Example:
+
+```bash
+# User defined time zone
+fake-git-history --time-zone "+0600"
+# or
+fake-git-history -tz "+0600"
+```
+
+The time zone formating is `+HHMM` or `-HHMM`. You have to write this way.
 
 ### `--remote-origin` and `-r`
 
@@ -162,18 +192,25 @@ fake-git-history --help
 **Output**
 
 ```bash
-usage: fake-git-history [-h] [--start-date START_DATE] [--end-date END_DATE] [--work-days-only] [--weekends-only] [--commit-per-day COMMIT_PER_DAY] [--auto-git-push] [--remote-origin REMOTE_ORIGIN] [--verbose] [--version]
+usage: fake-git-history [-h] [--start-date START_DATE] [--end-date END_DATE] [--start-time START_TIME] [--end-time END_TIME] [--time-zone TIME_ZONE] [--work-days-only] [--weekends-only] [--commit-per-day COMMIT_PER_DAY] [--auto-git-push] [--remote-origin REMOTE_ORIGIN] [--verbose] [--version]
 
 Fake Git History - A simple utility to generate fake git history for a Github and Gitlab profile.
 
 options:
   -h, --help            show this help message and exit
-  --start-date START_DATE, -s START_DATE
+  --start-date START_DATE, -sd START_DATE
                         Set the start date (dd/mm/yyyy)
-  --end-date END_DATE, -e END_DATE
+  --end-date END_DATE, -ed END_DATE
                         Set the end date (dd/mm/yyyy)
-  --work-days-only, -d  Filter commits to workdays only
-  --weekends-only, -w   Filter commits to weekends only
+  --start-time START_TIME, -st START_TIME
+                        Set the start time (hh:mm:ss)
+  --end-time END_TIME, -et END_TIME
+                        Set the end time (hh:mm:ss)
+  --time-zone TIME_ZONE, -tz TIME_ZONE
+                        Set the time zone in the format +0600
+  --work-days-only, -wd
+                        Create commits to workdays only
+  --weekends-only, -we  Create commits to weekends only
   --commit-per-day COMMIT_PER_DAY, -c COMMIT_PER_DAY
                         Set the number of commits per day
   --auto-git-push, -a   Enable auto git push
@@ -199,6 +236,8 @@ Generate fake git history for the last 90 days with 6-12 commits per day.
 
 ```bash
 fake-git-history --commit-per-day "6-12"
+# or
+fake-git-history -c "6-12"
 ```
 
 ### Example 3
@@ -207,6 +246,8 @@ Generate fake git history from 01/03/2016 to 12/02/2023 with 6-12 commits per da
 
 ```bash
 fake-git-history --start-date "01/03/2016" --end-date "12/02/2023" --commit-per-day "6-12" --verbose
+# or
+fake-git-history -sd "01/03/2016" -ed "12/02/2023" -c "6-12" -vv
 ```
 
 ### Example 4
@@ -215,6 +256,18 @@ Generate fake git history from 03/02/2000 to present date with 60-100 commits pe
 
 ```bash
 fake-git-history --start-date "03/02/2000" --commit-per-day "60-100" --remote-origin "git@github.com:<YOUR-USERNAME>/<YOUR-REPO>.git" --auto-git-push --verbose
+# or
+fake-git-history -sd "03/02/2000" -c "60-100" -r "git@github.com:<YOUR-USERNAME>/<YOUR-REPO>.git" -a -vv
+```
+
+### Example 5
+
+Generate fake git history from "07/03/2021" to "07/03/2022" and start time "09:00:00" and end time "17:00:00" with 4-6 commits per day in "-0300" timezone with verbose output. Add remote origin and auto git push.
+
+```bash
+fake-git-history --start-date "07/03/2021" --end-date "07/03/2022" --start-time "09:00:00" --end-time "17:00:00" -tz "-0300" --commit-per-day "4-6" --remote-origin "git@github.com:<YOUR-USERNAME>/<YOUR-REPO>.git" --auto-git-push --verbose
+# or
+fake-git-history -sd "07/03/2021" -ed "07/03/2022" -st "09:00:00" -et "17:00:00" -tz "-0300" -c "4-6" -r "git@github.com:<YOUR-USERNAME>/<YOUR-REPO>.git" -a -vv
 ```
 
 **Note 1:** You need to have SSH keys setup for the auto git push to work. If you don't have SSH keys setup, you can follow this [guide](https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh).
