@@ -27,7 +27,7 @@ class FakeGitHistory:
         self.is_work_days_only: bool = False
         self.is_weekends_only: bool = False
         self._verbose: bool = False
-        self._auto_git_push: bool = True
+        self._auto_git_push: bool = False
         self._remote_origin: str = ""
 
         # rong config
@@ -246,9 +246,23 @@ class FakeGitHistory:
         try:
             # loop through start date to end date and create commits
             while self._start_date <= self._end_date:
-                self._log.waitmsg(
-                    f"Processing date: {self._start_date}"
-                )
+
+                # Check if the date is a weekend or workday
+                # weekend is 5 (Saturday) and 6 (Sunday)
+                # workday is 0 (Monday) to 4 (Friday)
+                # else work 7 days
+                if self.is_work_days_only and self._start_date.weekday() >= 5:
+                    self._log.waitmsg(f"Skipping weekend date: {self._start_date} ({self._start_date.strftime('%a')})")
+                    # increment the date
+                    self._start_date += timedelta(days=1)
+                    continue
+                elif self.is_weekends_only and self._start_date.weekday() < 5:
+                    self._log.waitmsg(f"Skipping weekday date: {self._start_date} ({self._start_date.strftime('%a')})")
+                    # increment the date
+                    self._start_date += timedelta(days=1)
+                    continue
+
+                self._log.waitmsg(f"Processing date: {self._start_date} ({self._start_date.strftime('%a')})")
 
                 _internal_commit_per_day: int = (
                     self.get_commit_per_day(
@@ -286,8 +300,10 @@ class FakeGitHistory:
             self._log.errormsg("Script failed.")
             return
 
-        if self._remote_origin:
-            _, stderr = subprocess.Popen(
+        print(self._remote_origin)
+        if self._remote_origin != "":
+            print("inside login",self._remote_origin)
+            stdout, stderr = subprocess.Popen(
                 [
                     "git",
                     "remote",
@@ -299,19 +315,24 @@ class FakeGitHistory:
             ).communicate()
             if stderr:
                 self._log.errormsg(f"Error: {str(stderr)}")
-            else:
+            if stdout:
                 self._log.okmsg(
                     f"Remote origin set to {self._remote_origin}"
                 )
 
         if self._auto_git_push:
-            _, stderr = subprocess.Popen(
+            if self._remote_origin == "":
+                self._log.errormsg(
+                    "Remote origin not set. Please set the remote origin."
+                )
+                return
+            stdout, stderr = subprocess.Popen(
                 ["git", "push", "-u", "origin", "master"],
                 stdout=subprocess.PIPE,
             ).communicate()
             if stderr:
                 self._log.errormsg(f"Error: {str(stderr)}")
-            else:
+            if stdout:
                 self._log.okmsg(
                     f"Pushed to {self._remote_origin}"
                 )
@@ -396,6 +417,8 @@ def main() -> None:
         fgh.set_commit_per_day(
             count_range=str(args.commit_per_day)
         )
+    if args.remote_origin:
+        fgh.set_remote_origin(remote_origin=args.remote_origin)
     if args.auto_git_push:
         fgh.set_auto_git_push()
     if args.version:
