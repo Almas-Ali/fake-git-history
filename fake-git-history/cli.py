@@ -28,6 +28,7 @@ class FakeGitHistory:
         self.is_weekends_only: bool = False
         self._verbose: bool = False
         self._auto_git_push: bool = True
+        self._remote_origin: str = ""
 
         # rong config
         self._log: rong.Log = rong.Log(debug=False)
@@ -88,6 +89,13 @@ class FakeGitHistory:
         )
 
         return _internal_commit_per_day
+
+    def set_remote_origin(self, remote_origin: str) -> None:
+        """Set the remote origin."""
+        self._remote_origin = remote_origin
+        self._log.primary(
+            f"Remote origin set to: {remote_origin}"
+        )
 
     def enable_verbose(self) -> None:
         """Enable verbose mode."""
@@ -278,11 +286,27 @@ class FakeGitHistory:
             self._log.errormsg("Script failed.")
             return
 
+        if self._remote_origin:
+            _, stderr = subprocess.Popen(
+                ["git", "remote", "add", "origin", self._remote_origin],
+                stdout=subprocess.PIPE,
+            ).communicate()
+            if stderr:
+                self._log.errormsg(f"Error: {str(stderr)}")
+            else:
+                self._log.okmsg(
+                    f"Remote origin set to {self._remote_origin}"
+                )
+
         if self._auto_git_push:
-            _ = subprocess.Popen(
+            _, stderr = subprocess.Popen(
                 ["git", "push", "-u", "origin", "master"],
                 stdout=subprocess.PIPE,
             ).communicate()
+            if stderr:
+                self._log.errormsg(f"Error: {str(stderr)}")
+            else:
+                self._log.okmsg(f"Pushed to {self._remote_origin}")
 
         self._log.okmsg("Script completed.")
 
@@ -326,6 +350,12 @@ def main() -> None:
         "-a",
         action="store_true",
         help="Enable auto git push",
+    )
+    parser.add_argument(
+        "--remote-origin",
+        "-r",
+        type=str,
+        help="Set the remote origin",
     )
     parser.add_argument(
         "--verbose",
