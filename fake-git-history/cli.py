@@ -1,4 +1,4 @@
-from typing import NamedTuple, List, Dict, Optional, Tuple
+from typing import NamedTuple, List, Dict, Tuple
 import argparse
 from datetime import datetime, timedelta
 import random
@@ -27,7 +27,7 @@ class FakeGitHistory:
         # rong config
         self._log: rong.Log = rong.Log(debug=False)
 
-    def work_days_only(self):
+    def work_days_only(self) -> None:
         """Filter commits to workdays only."""
         self._commits = [
             commit
@@ -39,7 +39,7 @@ class FakeGitHistory:
         ]
         self._log.primary("Filtered to workdays only.")
 
-    def weekends_only(self):
+    def weekends_only(self) -> None:
         """Filter commits to weekends only."""
         self._commits = [
             commit
@@ -63,7 +63,9 @@ class FakeGitHistory:
     def set_end_date(self, date: str) -> None:
         """Set the end date (dd/mm/yyyy)."""
         self._end_date = datetime.strptime(date, "%d/%m/%Y")
-        self._log.primary(f"End date set to: {self._end_date}")
+        self._log.primary(
+            f"End date set to: {self._end_date}"
+        )
 
     def set_commit_per_day(self, count_range: str) -> None:
         """Set the number of commits per day."""
@@ -72,11 +74,7 @@ class FakeGitHistory:
             f"Commits per day set to: {self._commit_per_day}"
         )
 
-    def get_commit_per_day(
-        self,
-        count_range: str,
-        calculate_and_return: bool = False,
-    ) -> Optional[int]:
+    def get_commit_per_day(self, count_range: str) -> int:
         """Set the number of commits per day."""
         _internal_commit_per_day: int = 0
 
@@ -98,22 +96,21 @@ class FakeGitHistory:
             f"Commits per day set to: {_internal_commit_per_day}"
         )
 
-        if calculate_and_return:
-            return _internal_commit_per_day
+        return _internal_commit_per_day
 
-    def enable_verbose(self):
+    def enable_verbose(self) -> None:
         """Enable verbose mode."""
         self._verbose = True
         self._log.debug = True
         self._log.okmsg("Verbose mode enabled.")
 
-    def disable_verbose(self):
+    def disable_verbose(self) -> None:
         """Disable verbose mode."""
         self._log.okmsg("Verbose mode disabled.")
         self._verbose = False
         self._log.debug = False
 
-    def version(self):
+    def version(self) -> None:
         """Show the version."""
         print("Fake Git History version 1.0.0")
 
@@ -141,8 +138,7 @@ class FakeGitHistory:
             "year": self._start_date.strftime("%Y"),
         }
 
-        _commit_date: str = f"{dates.get('dateName')} {dates.get('month')} {
-            dates.get('date')} {_time} {dates.get('year')} +0600"
+        _commit_date: str = f"{dates.get('dateName')} {dates.get('month')} {dates.get('date')} {_time} {dates.get('year')} +0600"
 
         def add_file_commit() -> None:
             _ = subprocess.Popen(
@@ -204,7 +200,7 @@ class FakeGitHistory:
 
         return {"name": name, "description": description}
 
-    def run(self):
+    def run(self) -> None:
         """Run the script."""
         self._log.waitmsg("Running script.")
         self._log.primary(f"Start date: {self._start_date}")
@@ -238,10 +234,8 @@ class FakeGitHistory:
 
                 _internal_commit_per_day: int = (
                     self.get_commit_per_day(
-                        self._commit_per_day,
-                        calculate_and_return=True,
+                        self._commit_per_day
                     )
-                    or 1
                 )
                 name_description: Dict[str, str] = (
                     self.name_maker()
@@ -259,9 +253,13 @@ class FakeGitHistory:
                         removerstring=f"Remove {name_description.get('name')}.txt",
                         state=_state,
                     )
-                    _, name_description = update_state(state=_state)
+                    _, name_description = update_state(
+                        state=_state
+                    )
 
-                _, name_description = update_state(state=_state)
+                _, name_description = update_state(
+                    state=_state
+                )
 
                 self._start_date += timedelta(days=1)
 
@@ -273,7 +271,7 @@ class FakeGitHistory:
         self._log.okmsg("Script completed.")
 
 
-def main():
+def main() -> None:
     parser = argparse.ArgumentParser(
         description="Fake Git History - A python script to create fake git history."
     )
