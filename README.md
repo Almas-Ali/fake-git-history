@@ -2,6 +2,8 @@
 
 A simple utility to generate fake git history for a Github and Gitlab profile to make your profile look more active than it actually is.
 
+***Author: [Md. Almas Ali](https://almasali.net)***
+
 [![wakatime](https://wakatime.com/badge/user/168edf9f-71dc-49cc-bf77-592d9c9d4eed/project/60aed9e5-281b-4468-8819-5a1cef8d90d8.svg)](https://wakatime.com/badge/user/168edf9f-71dc-49cc-bf77-592d9c9d4eed/project/60aed9e5-281b-4468-8819-5a1cef8d90d8)
 [![PyPI version](https://badge.fury.io/py/fake-git-history.svg)](https://badge.fury.io/py/fake-git-history)
 [![Downloads](https://pepy.tech/badge/fake-git-history)](https://pepy.tech/project/fake-git-history)
@@ -308,4 +310,4 @@ This tool was created as a joke, so please don't take it seriously. While cheati
 
 ## License
 
-[MIT License](LICENSE)
+This project is licensed under the [MIT License](LICENSE). Feel free to use and modify this project. If you liked this project, give it a star ⭐.
