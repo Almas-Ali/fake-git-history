@@ -4,13 +4,26 @@ A command-line tool that generates GitHub or GitLab activity graph to make it lo
 
 ![How it works](https://github.com/Almas-Ali/fake-git-history/blob/master/contribution-graph.gif "How it works")
 
-## Features
+## Table of Contents
 
-Python project details:
-
-- [x] PEP-8 Complaint.
-- [x] Strictly type annotated.
-- [x] Well tested.
+- [Installation](#installation)
+- [Support This Project](#support-this-project)
+- [Options and Usage](#options-and-usage)
+  - [`--commit-per-day` and `-c`](#--commit-per-day-and--c)
+  - [`--work-days-only` and `-d`](#--work-days-only-and--d)
+  - [`--weekends-only` and `-w`](#--weekends-only-and--w)
+  - [`--start-date` and `--end-date` or `-s` and `-e`](#--start-date-and--end-date-or--s-and--e)
+  - [`--auto-git-push` and `-a`](#--auto-git-push-and---a)
+  - [`--verbose` and `-vv`](#--verbose-and--vv)
+  - [`--version` and `-v`](#--version-and--v)
+  - [`--help` and `-h`](#--help-and--h)
+- [Demo and Examples](#demo-and-examples)
+  - [Example 1](#example-1)
+  - [Example 2](#example-2)
+  - [Example 3](#example-3)
+  - [Example 4](#example-4)
+- [Caution](#caution)
+- [License](#license)
 
 ## Installation
 
@@ -98,6 +111,16 @@ fake-git-history -s "01/03/2016"
 
 The date formating is `DD/MM/YYYY`. You have to write this way.
 
+### `--remote-origin` and `-r`
+
+Use this option to set the remote origin. Example:
+
+```bash
+fake-git-history --remote-origin "git@github.com:<YOUR-USERNAME>/<YOUR-REPO>.git"
+# or
+fake-git-history -r "git@github.com:<YOUR-USERNAME>/<YOUR-REPO>.git"
+```
+
 ### `--auto-git-push` and `-a`
 
 Use this option to automatically push the commits to the remote repository. Example:
@@ -139,7 +162,7 @@ fake-git-history --help
 **Output**
 
 ```bash
-usage: fake-git-history [-h] [--start-date START_DATE] [--end-date END_DATE] [--work-days-only] [--weekends-only] [--commit-per-day COMMIT_PER_DAY] [--auto-git-push] [--verbose] [--version]
+usage: fake-git-history [-h] [--start-date START_DATE] [--end-date END_DATE] [--work-days-only] [--weekends-only] [--commit-per-day COMMIT_PER_DAY] [--auto-git-push] [--remote-origin REMOTE_ORIGIN] [--verbose] [--version]
 
 Fake Git History - A simple utility to generate fake git history for a Github and Gitlab profile.
 
@@ -154,11 +177,51 @@ options:
   --commit-per-day COMMIT_PER_DAY, -c COMMIT_PER_DAY
                         Set the number of commits per day
   --auto-git-push, -a   Enable auto git push
+  --remote-origin REMOTE_ORIGIN, -r REMOTE_ORIGIN
+                        Set the remote origin
   --verbose, -vv        Enable verbose mode
   --version, -v         Show the version
 ```
 
-## PS
+## Demo and Examples
+
+### Example 1
+
+Generate fake git history for the last 90 days with 0-3 commits per day.
+
+```bash
+fake-git-history
+```
+
+### Example 2
+
+Generate fake git history for the last 90 days with 6-12 commits per day.
+
+```bash
+fake-git-history --commit-per-day "6-12"
+```
+
+### Example 3
+
+Generate fake git history from 01/03/2016 to 12/02/2023 with 6-12 commits per day with verbose output.
+
+```bash
+fake-git-history --start-date "01/03/2016" --end-date "12/02/2023" --commit-per-day "6-12" --verbose
+```
+
+### Example 4
+
+Generate fake git history from 03/02/2000 to present date with 60-100 commits per day with verbose output. Add remote origin and auto git push.
+
+```bash
+fake-git-history --start-date "03/02/2000" --commit-per-day "60-100" --remote-origin "git@github.com:<YOUR-USERNAME>/<YOUR-REPO>.git" --auto-git-push --verbose
+```
+
+**Note 1:** You need to have SSH keys setup for the auto git push to work. If you don't have SSH keys setup, you can follow this [guide](https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh).
+
+**Note 2:** Don't forget to change your repository in private mode if you don't want others to see your fake commits. You can do this by going to your repository settings and changing the visibility to private.
+
+## Caution
 
 This tool was created as a joke, so please don't take it seriously. While cheating is never encouraged, if someone is judging your professional skills based on your GitHub activity graph, they deserve to see a rich activity graph 🤓
 
