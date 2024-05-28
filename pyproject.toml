@@ -1,7 +1,7 @@
 [project]
 name = "fake-git-history"
 dynamic = ["version"]
-dependencies = ["rong"]
+dependencies = ["rong==0.0.3"]
 requires-python = ">=3.7"
 authors = [{name = "Md. Almas Ali", email = "almaspr3@gmail.com"}]
 maintainers = [{name = "Md. Almas Ali", email = "almaspr3@gmail.com"}]
