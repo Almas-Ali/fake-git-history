@@ -4,6 +4,7 @@ A simple utility to generate fake git history for a Github and Gitlab profile to
 
 ***Author: [Md. Almas Ali](https://almasali.net)***
 
+![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FAlmas-Ali%2Ffake-git-history&count_bg=%2379C83D&title_bg=%23555555&icon=github.svg&icon_color=%23E7E7E7&title=Hits&edge_flat=false)
 [![wakatime](https://wakatime.com/badge/user/168edf9f-71dc-49cc-bf77-592d9c9d4eed/project/60aed9e5-281b-4468-8819-5a1cef8d90d8.svg)](https://wakatime.com/badge/user/168edf9f-71dc-49cc-bf77-592d9c9d4eed/project/60aed9e5-281b-4468-8819-5a1cef8d90d8)
 [![PyPI version](https://badge.fury.io/py/fake-git-history.svg)](https://badge.fury.io/py/fake-git-history)
 [![Downloads](https://pepy.tech/badge/fake-git-history)](https://pepy.tech/project/fake-git-history)
