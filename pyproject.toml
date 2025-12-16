@@ -54,6 +54,7 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Intended Audience :: Developers",
     "Natural Language :: English",
     "Environment :: Console",
@@ -76,9 +77,9 @@ build-backend = "hatchling.build"
 path = "fake_git_history/cli.py"
 
 [tool.ruff]
-line-length = 60
-target-version = "py311"
-respect-gitignore = false
+line-length = 120
+target-version = "py313"
+respect-gitignore = true
 
 [tool.ruff.format]
 quote-style = "double"
