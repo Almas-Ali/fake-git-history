@@ -53,7 +53,7 @@ This project is inspired by [fake-git-history](https://github.com/artiebits/fake
 
 If you find this project useful and want to support my work, you can buy me a coffee. My work is open source and free. Your support will allow me to continue my work and build more projects. Thank you for your support!
 
-<a href="https://www.buymeacoffee.com/almaspr3" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" title="Support Md. Almas Ali"></a>
+<a href="https://link.payoneer.com/Token?t=2E03FEE9CB1343618D0B91025A1DD1A6&src=pl" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" title="Support Md. Almas Ali"></a>
 
 ## Installation
 
