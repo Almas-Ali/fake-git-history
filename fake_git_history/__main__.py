@@ -15,9 +15,7 @@ def new_main() -> None:
     try:
         main()
     except KeyboardInterrupt:
-        log.errormsg(
-            "[!] KeyboardInterrupt: Stopping the running process..."
-        )
+        log.errormsg("[!] KeyboardInterrupt: Stopping the running process...")
     except Exception as e:
         log.errormsg(f"Error: {e}")
 
@@ -32,12 +30,8 @@ def new_main() -> None:
 
     print()
     # reminder to give a star to the repo
-    log.yellow(
-        "😃 If you liked the script, please consider giving a star in GitHub repo."
-    )
-    log.okmsg(
-        "https://github.com/Almas-Ali/fake-git-history"
-    )
+    log.yellow("😃 If you liked the script, please consider giving a star in GitHub repo.")
+    log.okmsg("https://github.com/Almas-Ali/fake-git-history")
     log.success("❤️  Thank you for using the script! :)")
 
 
