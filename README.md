@@ -7,9 +7,9 @@ A simple utility to generate fake git history for a Github and Gitlab profile to
 [![PyPI version](https://badge.fury.io/py/fake-git-history.svg)](https://badge.fury.io/py/fake-git-history)
 [![Downloads](https://pepy.tech/badge/fake-git-history)](https://pepy.tech/project/fake-git-history)
 [![wakatime](https://wakatime.com/badge/user/168edf9f-71dc-49cc-bf77-592d9c9d4eed/project/60aed9e5-281b-4468-8819-5a1cef8d90d8.svg)](https://wakatime.com/badge/user/168edf9f-71dc-49cc-bf77-592d9c9d4eed/project/60aed9e5-281b-4468-8819-5a1cef8d90d8)
-![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FAlmas-Ali%2Ffake-git-history&count_bg=%2379C83D&title_bg=%23555555&icon=github.svg&icon_color=%23E7E7E7&title=Hits&edge_flat=false)
+![Hits](https://hits.sh/github.com/Almas-Ali/fake-git-history.svg?extraCount=6000)
 
-![How it works](https://github.com/Almas-Ali/fake-git-history/blob/master/contribution-graph.gif "How it works")
+![How it works](https://raw.githubusercontent.com/Almas-Ali/fake-git-history/refs/heads/master/screenshots/contribution-graph.gif "How it works")
 
 ## Table of Contents
 
@@ -34,6 +34,7 @@ A simple utility to generate fake git history for a Github and Gitlab profile to
   - [Example 3](#example-3)
   - [Example 4](#example-4)
   - [Example 5](#example-5)
+- [Things to Remember](#things-to-remember)
 - [Caution](#caution)
 - [License](#license)
 
@@ -302,6 +303,24 @@ fake-git-history -sd "07/03/2021" -ed "07/03/2022" -st "09:00:00" -et "17:00:00"
 **Note 1:** You need to have SSH keys setup for the auto git push to work. If you don't have SSH keys setup, you can follow this [guide](https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh).
 
 **Note 2:** Don't forget to change your repository in private mode if you don't want others to see your fake commits. You can do this by going to your repository settings and changing the visibility to private.
+
+## Things to Remember
+
+1. Check which email is set in your git config. You can check it by running the following command in your terminal:
+
+```bash
+git config --global user.email
+```
+Make sure the email is the same as the one you are using in your GitHub or Gitlab account. If not, you can set it by running the following command:
+
+```bash
+git config --global user.email "<YOUR-EMAIL>"
+```
+
+2. If you are setting the repo as private, make sure to enable the option "Private contributions" in your GitHub profile graph top right side on the graph. Select both options. See the image below:
+
+![Private Contributions](https://raw.githubusercontent.com/Almas-Ali/fake-git-history/refs/heads/master/screenshots/profile-setting.png "Private Contributions")
+
 
 ## Caution
 
